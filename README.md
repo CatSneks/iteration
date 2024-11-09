@@ -1,26 +1,17 @@
 # attune
-
 Attune
-Spencer: test3.5
-test: eaming, trying to find dev
-Spencer pushing directly to dev, will try to make changes in my branch and then git pull origin dev after
-Test: Spencer
 
-Ian
-Test: Spencer
-
-test: ellie
-Test: Spencer
-
-
-
-✨✨✨ SURPRISE!!!! WE'RE BACK! ✨✨✨
-Spencer: writing up workflow, testing to confirm
-
-Patrice was here
-
-
-write up, I've pulled, this is the edit, but dev is ahead, git merge origin dev has conflicts and would overwrite. need to commit local branch
-
-local commit
-
+GIT PUSH/ PULL ORDER (WIP)
+git pull origin dev (a combo of git fetch + git merge)
+       OR
+git fetch origin dev
+git merge origin/dev
+      -> resolve conflicts on your end first
+git add . and commit -m "[msg]"
+git push origin [your-name]/feature
+make a pull request
+go to your branch (ie, ellie/feature)
+click 'compare and create pull request
+change base to dev
+make notes
+resolve conflicts
