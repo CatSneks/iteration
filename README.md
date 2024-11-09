@@ -20,4 +20,7 @@ Test: Spencer
 Patrice was here
 
 
-write up, I've pulled, this is the edit, but dev is ahead.
+write up, I've pulled, this is the edit, but dev is ahead, git merge origin dev has conflicts and would overwrite. need to commit local branch
+
+local commit
+
