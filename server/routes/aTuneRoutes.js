@@ -1,5 +1,5 @@
-import express from 'express';
-import aTuneController from '../controllers/aTuneController';
+const express = require('express');
+const aTuneController = require('../controllers/aTuneController');
 
 const router = express.Router();
 
@@ -7,4 +7,4 @@ router.get('/dayview', aTuneController.getDaily, (req, res) => {
   res.status(200).json({ dailyHabits: req.dailyHabits });
 });
 
-export default router;
+module.exports = router;
