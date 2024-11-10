@@ -1,11 +1,15 @@
-//npm install --save @supabase/supabase-js
-import { createClient } from '@supabase/supabase-js';
-import dotenv from 'dotenv'; // for loading environment variables
+const { createClient } = require('@supabase/supabase-js');
+const dotenv = require('dotenv'); // for loading environment variables
 
-dotenv.config(); // ensure the environment variables are loaded
+require('dotenv').config(); // ensure the environment variables are loaded
 
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_ANON_KEY;
+const supabaseKey = process.env.SUPABASE_API_ANON_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error('Supabase URL and key are required');
+}
+
 const supabase = createClient(supabaseUrl, supabaseKey); // create Supabase client instance to interact with Supabase proj
 
 const getDailyHabits = async () => { // fetch daily habits from Supabase
@@ -21,4 +25,4 @@ const getDailyHabits = async () => { // fetch daily habits from Supabase
   }
 };
 
-export default { getDailyHabits };
+module.exports = { getDailyHabits };

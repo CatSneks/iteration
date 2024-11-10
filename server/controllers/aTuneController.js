@@ -1,4 +1,4 @@
-import aTuneModels from '../models/aTuneModels';
+const aTuneModels = require('../models/aTuneModels');
 
 const getDaily = async (req, res, next) => {
   try {
@@ -15,4 +15,4 @@ const getDaily = async (req, res, next) => {
   }
 };
 
-export default { getDaily };
+module.exports = { getDaily };
