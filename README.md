@@ -1,3 +1,33 @@
+Spencer: test3.5
+test: eaming, trying to find dev
+Spencer pushing directly to dev, will try to make changes in my branch and then git pull origin dev after
+Test: Spencer
+
+Ian
+Test: Spencer
+
+test: ellie
+Test: Spencer
+
+✨✨✨ SURPRISE!!!! WE'RE BACK! ✨✨✨
+Spencer: writing up workflow, testing to confirm
+
+Patrice was here
+GIT PUSH/ PULL ORDER (WIP)
+git pull origin dev (a combo of git fetch + git merge)
+OR
+git fetch origin dev
+git merge origin/dev
+-> resolve conflicts on your end first
+git add . and commit -m "[msg]"
+git push origin [your-name]/feature
+make a pull request
+go to your branch (ie, ellie/feature)
+click 'compare and create pull request
+change base to dev
+make notes
+resolve conflicts
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
