@@ -1,6 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from 'react';
+// import Header from './components/Header.jsx';
+import View from './components/View.jsx';
+// import Footer from '.components/Footer.jsx'
 
 function App() {
   const [user, setUser] = useState({ username: 'Fishy', user_id: 1 });
@@ -9,19 +12,40 @@ function App() {
     { task: 'go for a run', task_id: 2 },
     { task: 'go grocery shopping', task_id: 3 },
   ]);
-  const [activeTab, setActiveTab] = useState('login');
+  const [activeView, setActiveView] = useState('');
 
   useEffect(() => {
-    //get user data
-    fetch(`http://localhost:3000/dayview/user?id=${user_id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.tasklist) setActiveTab('dayview');
-        if (data.tasklist) set;
-      });
+    //get user data // assumes that the user has already logged in and been authenticated
+    const fetchGoals = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/dayview/user?id=${user_id}`
+        );
+        const data = await response.json();
+        setList(data.tasklist);
+        setActiveView('dayview');
+      } catch (error) {
+        console.error('error fetching user task list' + error);
+      }
+    };
   }, []);
 
-  return <div className='App'></div>;
+  const handleViewChange = (view) => {
+    return () => {
+      setActiveView(view);
+    };
+  };
+  return (
+    // <Header user={user}>
+    <main>
+      <View
+        activeView={activeView}
+        list={todaysList}
+        handleViewChange={handleViewChange}
+      />
+    </main>
+    // <Footer/>
+  );
 }
 
 export default App;
