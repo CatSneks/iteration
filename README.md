@@ -1,18 +1,5 @@
-Spencer: test3.5
-test: eaming, trying to find dev
-Spencer pushing directly to dev, will try to make changes in my branch and then git pull origin dev after
-Test: Spencer
-
-Ian
-Test: Spencer
-
-test: ellie
-Test: Spencer
-
 ✨✨✨ SURPRISE!!!! WE'RE BACK! ✨✨✨
-Spencer: writing up workflow, testing to confirm
 
-Patrice was here
 GIT PUSH/ PULL ORDER (WIP)
 git pull origin dev (a combo of git fetch + git merge)
 OR
@@ -27,6 +14,12 @@ click 'compare and create pull request
 change base to dev
 make notes
 resolve conflicts
+
+✨✨✨ PATRICE & SPENCER TO DO LIST ✨✨✨
+<!-- 1) get request for users daily habits (hardcoded info in supabase at first) -->
+<!-- 2) get request to query spotify and handle the response -->
+<!-- MVP STRETCH -->
+<!-- 3) post/put/patch method to actually add habits -->
 
 # Getting Started with Create React App
 
