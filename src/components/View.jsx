@@ -11,15 +11,17 @@ function View({ activeView, list, handleViewChange }) {
   console.log(today);
 
   if (activeView == 'dayview') {
-    return (<h1>{today}</h1>
-  <ul>
-    <List/>
-  </ul>)
+    return (
+      <>
+        <h1>{today}</h1>
+        <ul>
+          <List list={list} />
+        </ul>
+      </>
+    );
+  } else if (activeView == 'addhabit') {
+    return <HabitForm />;
+  } else if (activeView == 'habitsummary') {
+    return <Summary />;
+  }
 }
-else if (activeView == 'addhabit') {
-    return (<HabitForm/>)
-}
-else if (activeView == 'habitsummary') {
-    return (<Summary/>)
-}
-};
