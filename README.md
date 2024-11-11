@@ -1,22 +1,4 @@
-
 ✨✨✨ SURPRISE!!!! WE'RE BACK! ✨✨✨
-
-=======
-Spencer: test3.5
-test: eaming, trying to find dev
-Spencer pushing directly to dev, will try to make changes in my branch and then git pull origin dev after
-Test: Spencer
-
-Ian
-Test: Spencer
-
-test: ellie
-Test: Spencer
-
-✨✨✨ SURPRISE!!!! WE'RE BACK! ✨✨✨
-Spencer: writing up workflow, testing to confirm
-
-Patrice was here
 
 GIT PUSH/ PULL ORDER (WIP)
 git pull origin dev (a combo of git fetch + git merge)
@@ -33,13 +15,13 @@ change base to dev
 make notes
 resolve conflicts
 
-
 ✨✨✨ PATRICE & SPENCER TO DO LIST ✨✨✨
 <!-- 1) get request for users daily habits (hardcoded info in supabase at first) -->
 <!-- 2) get request to query spotify and handle the response -->
+3) Hardcode a input user's name, use that to query Supabase for the id
+4) Pass the id into the /dayview route to get the habits attribute row to access the mood
 <!-- MVP STRETCH -->
-<!-- 3) post/put/patch method to actually add habits -->
-
+<!-- 5) post/put/patch method to actually add habits -->
 
 
 # Getting Started with Create React App
