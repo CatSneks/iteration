@@ -3,16 +3,17 @@ import React, { useState } from 'react';
 function YourTune({ seed }) {
   const [tune, setTune] = useState(null);
 
+  console.log(seed);
+
+  // `http://localhost:3000/recommendations?seed_genres=${seed}&target_valence=0.8&target_danceability=0.7`,
+
   const getTune = (seed) => () => {
-    fetch(
-      `http://localhost:3000/recommendations?seed_genres=${seed}&target_valence=0.8&target_danceability=0.7`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
+    fetch(`http://localhost:3000/recommendations?seed_genres=${seed}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
