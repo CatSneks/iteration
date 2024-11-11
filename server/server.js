@@ -3,7 +3,7 @@ const express = require('express');
 const SpotifyWebApi = require('spotify-web-api-node');
 const cors = require('cors');
 require('dotenv').config();
-
+const aTuneRoutes = require('./routes/aTuneRoutes');
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -36,6 +36,19 @@ const getAccessToken = async (req, res, next) => {
     res.status(500).json({ error: 'Failed to authenticate with Spotify API' });
   }
 };
+
+app.use('/api', aTuneRoutes); // /api/dayview will be routed to the associated handler in aTuneRoutes
+
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 500,
+    message: { err: 'An error occurred' },
+  };
+  const errorObj = Object.assign({}, defaultErr, err); // Merge default error with provided error
+  console.log(errorObj.log); // Log the error
+  return res.status(errorObj.status).json(errorObj.message); // Return the error to the client
+});
 
 // Route to get a single song recommendation without default values
 app.get('/recommendations', getAccessToken, async (req, res) => {
