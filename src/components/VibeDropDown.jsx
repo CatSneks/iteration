@@ -5,24 +5,27 @@ function VibeDropDown({ options, updateVibe }) {
 
   const handleChange = (event) => {
     const value = event.target.value;
-    updateVibe(value);
     setSelectedValue(value);
   };
-
   return (
-    <div>
-      <label>Choose Vibe</label>
-      <select value={selectedValue} onChange={handleChange}>
-        <option value='' disabled>
-          Select an option
+    // <option value='' disabled>
+    //   choose one
+    // </option>
+    <select name='vibes' id='vibes'>
+      <option value='first vibe'></option>
+      <select
+        name='vibe'
+        id='vibe'
+        value={selectedValue}
+        onChange={handleChange}
+      ></select>
+      {/*add the input box for the habit to be created**/}
+      {Object.keys(options).map((key) => (
+        <option key={key} value={key}>
+          {key}
         </option>
-        {Object.keys(options).map((key) => (
-          <option key={key} value={key}>
-            {key}
-          </option>
-        ))}
-      </select>
-    </div>
+      ))}
+    </select>
   );
 }
 
