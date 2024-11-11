@@ -1,3 +1,26 @@
+✨✨✨ SURPRISE!!!! WE'RE BACK! ✨✨✨
+
+GIT PUSH/ PULL ORDER (WIP)
+git pull origin dev (a combo of git fetch + git merge)
+OR
+git fetch origin dev
+git merge origin/dev
+-> resolve conflicts on your end first
+git add . and commit -m "[msg]"
+git push origin [your-name]/feature
+make a pull request
+go to your branch (ie, ellie/feature)
+click 'compare and create pull request
+change base to dev
+make notes
+resolve conflicts
+
+✨✨✨ PATRICE & SPENCER TO DO LIST ✨✨✨
+<!-- 1) get request for users daily habits (hardcoded info in supabase at first) -->
+<!-- 2) get request to query spotify and handle the response -->
+<!-- MVP STRETCH -->
+<!-- 3) post/put/patch method to actually add habits -->
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
