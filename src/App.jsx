@@ -12,6 +12,7 @@ function App() {
     <div className='App'>
       {error && console.log(error)}
       <Header userId={userId} setUserId={setUserId} setError={setError} />
+      {console.log(userId)}
       {userId && <Main userId={userId} />}
     </div>
   );

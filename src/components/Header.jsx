@@ -3,12 +3,13 @@ import React, { useRef } from 'react';
 import TodaysDate from './TodayDate';
 
 function Header({ userId, setUserId, setError }) {
-
   const searchInputRef = useRef(null);
 
   const fetchUserId = async (userName) => {
     try {
-      const responseId = await fetch(`/api/userId?userName=${userName}`);
+      const responseId = await fetch(
+        `http://localhost:3000/api/userId?userName=${userName}`
+      );
       const resultId = await responseId.json(); // parse response body as json
       if (responseId.ok) {
         setUserId(resultId.userId); // set dailyHabits state with response data

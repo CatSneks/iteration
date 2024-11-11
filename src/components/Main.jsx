@@ -16,9 +16,11 @@ function Main({ userId }) {
 
   useEffect(() => {
     // once component mounts/renders
+    console.log({ userId });
     if (!userId) return;
     const fetchDailyHabits = async () => {
       // fetch dailyHabits
+
       try {
         const responseHabits = await fetch(`/api/dayview?userId=${userId}`); // fetch per GET request for user dailyHabits from backend
         const resultHabits = await responseHabits.json(); // parse response body as json
@@ -33,9 +35,10 @@ function Main({ userId }) {
     };
     fetchDailyHabits(); // evoke fetchDailyHabits to start fetching dailyHabits
   }, [userId]);
-  
+
   return (
     <main>
+      {console.log(userId)}
       <h2 className='dailyHeader'>Your Daily Habits</h2>
       {error /* renders the error message if error is defined */ && (
         <p>{error}</p>
