@@ -1,4 +1,8 @@
+
 import React, { useState, useEffect } from 'react';
+
+import React, { useState } from 'react';
+
 import './App.css';
 import YourTune from './components/YourTune';
 import seeds from './components/spotifySeeds';
@@ -6,6 +10,7 @@ import VibeDropDown from './components/VibeDropDown';
 
 function App() {
   const [vibe, setVibe] = useState('Nature Walk');
+
 
   const [dailyHabits, setDailyHabits] = useState([]);
   const [error, setError] = useState(null);
@@ -29,10 +34,13 @@ function App() {
     fetchDailyHabits(); // evoke fetchDailyHabits to start fetching dailyHabits
   }, []);
 
+
+
   return (
     <div className='App'>
       <header className='App-header'></header>
       <main>
+
         <h1 className='dailyHeader'>Your Daily Habits</h1>
         {error /* renders the error message if error is defined */ && (
           <p>{error}</p>
@@ -56,6 +64,9 @@ function App() {
             )
           )}
         </ul>
+
+        <h1>Attune</h1>
+
         <VibeDropDown options={seeds} updateVibe={setVibe} />
         <YourTune seed={seeds[vibe]()} />
       </main>
