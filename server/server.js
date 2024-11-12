@@ -5,14 +5,18 @@ const cors = require('cors');
 require('dotenv').config();
 const aTuneRoutes = require('./routes/aTuneRoutes');
 const app = express();
+const cookieParser = require('cookie-parser');
+const authRoutes = require('./auth');
+
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 // Initialize Spotify API with credentials
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  //redirectUri: 'http://localhost:3000/api/callback', // Adjust to your frontend URL
+  redirectUri: 'http://localhost:5001/api/callback', // Adjust to your frontend URL
 });
 
 let cachedToken = null;
@@ -36,6 +40,8 @@ const getAccessToken = async (req, res, next) => {
     res.status(500).json({ error: 'Failed to authenticate with Spotify API' });
   }
 };
+
+app.use('/api', authRoutes);
 
 app.use('/api', aTuneRoutes); // /api/dayview will be routed to the associated handler in aTuneRoutes
 
