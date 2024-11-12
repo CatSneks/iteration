@@ -1,6 +1,6 @@
 import React from 'react';
-import VibeDropDown from './VibeDropDown';
-import seeds from './spotifySeeds';
+// import VibeDropDown from './VibeDropDown';
+// import seeds from './spotifySeeds';
 
 //this will be updated to a post request to the database
 //that adds the habit to the user in the database
