@@ -23,6 +23,17 @@ resolve conflicts
 <!-- MVP STRETCH -->
 <!-- 5) post/put/patch method to actually add habits -->
 
+✨✨✨ COMPONENT STRUCTURE ✨✨✨
+/src/index.js
+  /src/App.js
+    /src/components/Header.jsx (renders header and currently the login placeholder via name)
+      /src/components/TodaysDate.jsx (COMBINE WITH Header)
+    /src/components/Main.jsx
+      /src/components/YourTune.jsx (submit buttong for VibeDropDown)
+      /src/components/VibeDropDown.jsx (dropdown to select vibe, COMBINE WITH YourTune)
+      /src/components/UserHabits.jsx (fetches and renders save habits)
+
+    
 
 # Getting Started with Create React App
 

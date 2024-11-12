@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 function YourTune({ seed }) {
   const [tune, setTune] = useState(null);
 
-  console.log(seed);
+  //console.log(seed);
 
   // `http://localhost:3000/recommendations?seed_genres=${seed}&target_valence=0.8&target_danceability=0.7`,
 
