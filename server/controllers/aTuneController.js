@@ -25,9 +25,11 @@ const userId = async (req, res, next) => {
 
 const getDaily = async (req, res, next) => {
   try {
-    const dailyHabits = await aTuneModels.getDailyHabits(); // call model to fetch dailyHabits from Supabase
+    const id = req.query.userId;
+    const dailyHabits = await aTuneModels.getDailyHabits(id); // call model to fetch dailyHabits from Supabase
+   
     req.dailyHabits = dailyHabits;
-    next();
+    return next();
   } catch (error) {
     console.error('Error with aTuneController.getDaily:', error);
     return next({

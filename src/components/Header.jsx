@@ -11,6 +11,9 @@ function Header({ userId, setUserId, setError }) {
         `http://localhost:3000/api/userId?userName=${userName}`
       );
       const resultId = await responseId.json(); // parse response body as json
+      //console.log('id!!!!!', resultId.userId[0].id);
+      const id = resultId.userId[0].id;
+      setUserId(id);
       if (responseId.ok) {
         setUserId(resultId.userId); // set dailyHabits state with response data
       } else {
@@ -37,7 +40,7 @@ function Header({ userId, setUserId, setError }) {
     <header className='App-header container'>
       <h1 className='App-header'>attune</h1>
 
-      <h2>{`Welcome, ${userId}`}</h2>
+      <h2>Welcome!</h2>
       {/*button for adding a habit
       <button type='submit'>
         add habit button
