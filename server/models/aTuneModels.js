@@ -12,6 +12,56 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = createClient(supabaseUrl, supabaseKey); // create Supabase client instance to interact with Supabase proj
 
+const createUser = async (userData) => {
+  try {
+    // First check if user already exists using email
+    const { data: existingUser, error: checkError } = await supabase
+      .from('Users')
+      .select('*') // Select all fields to return the complete user object
+      .eq('email', userData.email)
+      .single();
+
+    // If there's an error but it's not the "no rows returned" error, throw it
+    if (checkError && checkError.code !== 'PGRST116') {
+      throw checkError;
+    }
+
+    // If user exists, return the existing user
+    if (existingUser) {
+      console.log('Existing user found:', existingUser);
+      return existingUser;
+    }
+
+    console.log('Creating new user with data:', {
+      name: userData.display_name,
+      email: userData.email,
+      habits: [],
+    });
+
+    // If user doesn't exist, create new user without specifying ID
+    const { data, error } = await supabase
+      .from('Users')
+      .insert({
+        name: userData.display_name,
+        email: userData.email,
+        habits: [],
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error during user creation:', error);
+      throw error;
+    }
+
+    console.log('New user created:', data);
+    return data;
+  } catch (error) {
+    console.error('Error creating/fetching user: ', error);
+    throw error;
+  }
+};
+
 const getUserId = async (userName) => {
   // fetch daily mood from Supabase
   console.log({ userName });
@@ -74,4 +124,4 @@ const makeDailyHabits = async (user_id, newHabit) => {
   }
 };
 
-module.exports = { getDailyHabits, makeDailyHabits, getUserId };
+module.exports = { getDailyHabits, makeDailyHabits, getUserId, createUser };
