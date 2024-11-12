@@ -78,7 +78,6 @@ function App() {
             </div>
           </header>
         )}
-  
         {/* Conditionally render the Main component if userId is set */}
         {userId && <Main userId={userId} />}
       </div>
