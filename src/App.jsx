@@ -1,32 +1,43 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Main from './components/Main';
 
 function App() {
   const [userId, setUserId] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
   const [error, setError] = useState(null);
   const [dayOfWeek, setDayOfWeek] = useState('');
   const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
+  const [userProfile, setUserProfile] = useState(null);
 
-  const searchInputRef = useRef(null);
+  const handleSpotifyLogin = () => {
+    window.location.href = 'http://localhost:5001/api/login';
+  };
 
-  const fetchUserId = async (userName) => {
-    try {
-      const responseId = await fetch(
-        `http://localhost:3000/api/userId?userName=${userName}`
-      );
-      const resultId = await responseId.json();
-      const id = resultId.userId[0].id;
-      setUserId(id);
-      if (!responseId.ok) {
-        setError(resultId.error);
-      }
-    } catch (err) {
-      setError('Error getting Id');
-    }
+  const handleLogout = () => {
+    window.location.href = 'http://localhost:5001/api/logout';
+    setUserId(null);
+    setAccessToken(null);
+    setUserProfile(null);
   };
 
   useEffect(() => {
+    // Parse URL parameters after OAuth redirect
+    const params = new URLSearchParams(window.location.search);
+    const userIdParam = params.get('userId');
+    const accessTokenParam = params.get('accessToken');
+    const errorParam = params.get('error');
+
+    if (errorParam) {
+      setError(errorParam);
+    } else if (userIdParam && accessTokenParam) {
+      setUserId(userIdParam);
+      setAccessToken(accessTokenParam);
+      // Clear URL parameters
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+
+    // Set date information
     const TodaysDate = () => {
       const today = new Date();
       const months = [
@@ -63,8 +74,32 @@ function App() {
     TodaysDate();
   }, []);
 
+  // Function to fetch user data after authentication
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (userId && accessToken) {
+        try {
+          const response = await fetch('http://localhost:5001/api/me', {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+          if (!response.ok) {
+            throw new Error('Failed to fetch user data');
+          }
+          const userData = await response.json();
+          setUserProfile(userData.profile);
+        } catch (err) {
+          setError('Failed to fetch user data');
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [userId, accessToken]);
+
   return (
-    <div className='min-h-screen bg-gradient-to-b from-blue-50 to-white'>
+    <div className='min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col'>
       {error && (
         <div
           className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative'
@@ -75,45 +110,56 @@ function App() {
       )}
 
       {userId ? (
-        // Header for authenticated users
         <header className='container mx-auto px-4 py-8'>
-          <div className='text-center'>
+          <div className='relative text-center'>
+            {/* Logout button positioned in top right */}
+            <button
+              onClick={handleLogout}
+              className='absolute right-0 top-0 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2'
+            >
+              Logout
+            </button>
+
             <h1 className='text-4xl font-bold text-blue-600 mb-4'>aTune</h1>
-            <h2 className='text-2xl text-gray-700 mb-2'>Welcome!</h2>
+
+            {/* User Profile Section */}
+            <div className='flex items-center justify-center gap-4 mb-4'>
+              {userProfile?.images?.[0]?.url ? (
+                <img
+                  src={userProfile.images[0].url}
+                  alt='Profile'
+                  className='w-12 h-12 rounded-full border-2 border-blue-600'
+                />
+              ) : (
+                <div className='w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white text-xl'>
+                  {userProfile?.display_name?.[0]?.toUpperCase() || '?'}
+                </div>
+              )}
+              <h2 className='text-2xl text-gray-700'>
+                Welcome, {userProfile?.display_name || 'there'}!
+              </h2>
+            </div>
+
             <div className='text-gray-500 font-medium'>
               {`${dayOfWeek}, ${month} ${day}`}
             </div>
           </div>
         </header>
       ) : (
-        // Header for non-authenticated users
-        <header className='container mx-auto px-4 py-16'>
-          <div className='max-w-md mx-auto text-center'>
-            <h1 className='text-4xl font-bold text-blue-600 mb-8'>Attune</h1>
-            <div className='flex flex-col gap-4 sm:flex-row sm:gap-2 justify-center'>
-              <input
-                type='text'
-                id='userName'
-                placeholder='Please enter your user name'
-                ref={searchInputRef}
-                className='px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter')
-                    fetchUserId(searchInputRef.current.value.trim());
-                }}
-              />
-              <button
-                onClick={() => fetchUserId(searchInputRef.current.value.trim())}
-                className='px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
-              >
-                Login
-              </button>
-            </div>
+        <div className='flex-1 flex items-center justify-center'>
+          <div className='text-center'>
+            <h1 className='text-6xl font-bold text-blue-600 mb-8'>Attune</h1>
+            <button
+              onClick={handleSpotifyLogin}
+              className='px-8 py-3 bg-green-600 text-white text-lg rounded-lg hover:bg-green-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex items-center justify-center gap-2'
+            >
+              <span>Login with Spotify</span>
+            </button>
           </div>
-        </header>
+        </div>
       )}
 
-      {userId && <Main userId={userId} />}
+      {userId && <Main userId={userId} accessToken={accessToken} />}
     </div>
   );
 }
