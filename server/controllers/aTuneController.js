@@ -27,7 +27,7 @@ const getDaily = async (req, res, next) => {
   try {
     const id = req.query.userId;
     const dailyHabits = await aTuneModels.getDailyHabits(id); // call model to fetch dailyHabits from Supabase
-   
+
     req.dailyHabits = dailyHabits;
     return next();
   } catch (error) {
@@ -44,13 +44,25 @@ const getDaily = async (req, res, next) => {
 
 const addNewHabit = async (req, res, next) => {
   try {
-    const newHabit = await aTuneModels.makeDailyHabits(); // call model to fetch dailyHabits from Supabase
-    req.newHabit = newHabit;
+    const { user_id, newHabit } = req.body;
+
+    if (!user_id || !newHabit) {
+      return next({
+        log: 'Missing required fields in addNewHabit',
+        status: 400,
+        message: {
+          err: 'User ID and new habit are required',
+        },
+      });
+    }
+
+    const updatedHabits = await aTuneModels.makeDailyHabits(user_id, newHabit);
+    req.newHabit = updatedHabits;
     next();
   } catch (error) {
     console.error('Error with aTuneController.addNewHabit:', error);
     return next({
-      log: `Error in aTuneController.getDaily middleware. Error: ${error.message}`,
+      log: `Error in aTuneController.addNewHabit middleware. Error: ${error.message}`,
       status: 500,
       message: {
         err: 'An error occurred while posting daily habits to Supabase',
