@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import seeds from './spotifySeeds';
 import YourTune from './YourTune';
-import VibeDropDown from './VibeDropDown';
 import CreateHabit from './CreateHabit';
 import UserHabits from './UserHabits';
 
@@ -13,6 +12,14 @@ function Main({ userId }) {
   const [error, setError] = useState(null);
   const [vibe, setVibe] = useState('Nature Walk');
   const [dailyHabits, setDailyHabits] = useState([]);
+
+  //from VibeDropDown
+  const [selectedValue, setSelectedValue] = useState('');
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setSelectedValue(value);
+  };
 
   useEffect(() => {
     // once component mounts/renders
@@ -44,13 +51,31 @@ function Main({ userId }) {
   return (
     <main>
      
-
       {/*yourtune randomly generates a vibe: this should be replaced by createdHabit*/}
       <YourTune seed={seeds[vibe]()} updateVibe={setVibe} />
 
-      <VibeDropDown options={seeds} updateVibe={setVibe} />
+      {/*<VibeDropDown options={seeds} updateVibe={setVibe} /> */}
+      <div id="VibeDropDown">
+        <select name='vibes' id='vibes'>
+          <option value='first vibe'></option>
+          <select
+            name='vibe'
+            id='vibe'
+            value={selectedValue}
+            onChange={handleChange}
+          ></select>
+          {/*add the input box for the habit to be created**/}
+          {Object.keys(seeds).map((key) => ( //keys(options) -> keys(seeds)
+            <option key={key} value={key}>
+              {key}
+            </option>
+          ))}
+        </select>
+      </div>
       {/* <CreateHabit /> */}
       <UserHabits dailyHabits={dailyHabits} />
+      
+
     </main>
   );
 }
