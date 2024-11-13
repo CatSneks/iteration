@@ -2,30 +2,30 @@ import React from 'react';
 import YourTune from './YourTune';
 
 function UserHabits({ dailyHabits }) {
-  // const habitsTest = {
-  //   'Nature Walk':
-  //     '?seed_genres=folk,acoustic,country&target_valence=0.5759277905703928&target_energy=0.46366762362491326&target_tempo=85&target_acousticness=0.9217140119077961&target_danceability=0.5924534615954699',
+  if (!dailyHabits || dailyHabits.length === 0) {
+    return (
+      <section className='mt-8'>
+        <h3 className='text-xl font-semibold mb-4'>Habits</h3>
+        <p className='text-gray-500'>
+          No habits added yet. Create one to get started!
+        </p>
+      </section>
+    );
+  }
 
-  //   'At the Gym':
-  //     '?seed_genres=folk,acoustic,country&target_valence=0.5759277905703928&target_energy=0.46366762362491326&target_tempo=85&target_acousticness=0.9217140119077961&target_danceability=0.5924534615954699',
-
-  //   Meditation:
-  //     '?seed_genres=folk,acoustic,country&target_valence=0.5759277905703928&target_energy=0.46366762362491326&target_tempo=85&target_acousticness=0.9217140119077961&target_danceability=0.5924534615954699',
-  // };
-  console.log(dailyHabits);
   const habits = dailyHabits.map((habit, index) => {
     const [habitKey, habitDetails] = Object.entries(habit)[0];
-    return (<div key={index}>
-     <span>{habitKey}</span>
-      <YourTune seed={habitDetails} />
-     </div>)
+    return (
+      <div key={index} className='mb-6'>
+        <h4 className='text-lg font-medium mb-2'>{habitKey}</h4>
+        <YourTune seed={habitDetails} />
+      </div>
+    );
   });
 
-  console.log({ habits });
-
   return (
-    <section>
-      <h3>Habits</h3>
+    <section className='mt-8'>
+      <h3 className='text-xl font-semibold mb-4'>Habits</h3>
       <div>{habits}</div>
     </section>
   );
