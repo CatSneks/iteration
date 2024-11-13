@@ -63,16 +63,12 @@ const createUser = async (userData) => {
 };
 
 const getUserId = async (userName) => {
-  // fetch daily mood from Supabase
-  console.log({ userName });
   try {
-    const users = await supabase.from('Users').select('*');
-    console.log({ users });
+    const users = await supabase.from('Users').select('*'); // fetch daily mood from Supabase
     const { data, error } = await supabase // query Supabase, </user_id> Replace <user_id> with the actual user's ID
       .from('Users') // from Users table
       .select('id') // selecting the habits column
       .eq('name', userName); // filtered by user_id
-    console.log({ data });
     if (error) throw error;
     return data; // return fetched data
   } catch (error) {

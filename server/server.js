@@ -81,8 +81,6 @@ app.get('/recommendations', getAccessToken, async (req, res) => {
       limit: 1, // Limit to 1 recommendation
     });
 
-    console.log(response);
-
     // Send the recommended track as JSON response
     // we are grabbing the smallest image, but could grab a bigger one, biggest being at images[0]
     const recommendations = response.body.tracks.map((track) => ({

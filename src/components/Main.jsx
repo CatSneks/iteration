@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import seeds from './spotifySeeds';
-import YourTune from './YourTune';
 import CreateHabit from './CreateHabit';
 import UserHabits from './UserHabits';
 
@@ -9,12 +8,12 @@ function Main({ userId }) {
   const [vibe, setVibe] = useState('Nature Walk');
   const [dailyHabits, setDailyHabits] = useState([]);
   const [showCreateHabit, setShowCreateHabit] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('');
+  // const [selectedValue, setSelectedValue] = useState('');
 
-  const handleChange = (event) => {
-    const value = event.target.value;
-    setSelectedValue(value);
-  };
+  // const handleChange = (event) => {
+  //   const value = event.target.value;
+  //   setSelectedValue(value);
+  // };
 
   useEffect(() => {
     if (!userId) return;
@@ -38,9 +37,9 @@ function Main({ userId }) {
 
   return (
     <main className='container mx-auto p-4'>
-      <YourTune seed={seeds[vibe]()} updateVibe={setVibe} />
+      {/* <YourTune seed={seeds[vibe]()} updateVibe={setVibe} /> */}
 
-      <div id='VibeDropDown'>
+      {/* <div id='VibeDropDown'>
         <select
           name='vibes'
           id='vibes'
@@ -57,7 +56,7 @@ function Main({ userId }) {
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
 
       <button
         onClick={() => setShowCreateHabit(true)}

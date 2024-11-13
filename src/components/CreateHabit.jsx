@@ -15,11 +15,8 @@ function CreateHabit({ seeds, setVibe, onClose, userId }) {
     }
 
     try {
-      // Get the spotify parameters by calling the selected mood function
-      const moodParameters = seeds[selectedMood]();
-
-      // Create the habit object with the habitName as key and mood parameters as value
-      const newHabit = { [habitName]: moodParameters };
+      const moodParameters = seeds[selectedMood](); // Get the spotify parameters by calling the selected mood function
+      const newHabit = { [habitName]: moodParameters }; // Create the habit object with the habitName as key and mood parameters as value
 
       const response = await fetch('http://localhost:3000/api/addNewHabit', {
         method: 'POST',
@@ -75,11 +72,9 @@ function CreateHabit({ seeds, setVibe, onClose, userId }) {
           placeholder='Enter activity...'
           className='w-full p-4 border border-gray-200 rounded-xl text-base bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-400'
         />
-
         <h2 className='text-2xl text-center text-gray-800 mb-6'>
           What is the mood?
         </h2>
-
         <div className='w-full'>
           <VibeDropDown
             options={seeds}
@@ -87,7 +82,6 @@ function CreateHabit({ seeds, setVibe, onClose, userId }) {
             className='w-full p-4 border border-gray-200 rounded-xl text-base bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-400'
           />
         </div>
-
         <button
           type='submit'
           className='w-full py-4 bg-indigo-400 text-white rounded-full text-base hover:bg-indigo-500 transition-colors mt-6'
