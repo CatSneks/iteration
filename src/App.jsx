@@ -147,6 +147,10 @@ function App() {
 
             <h1 className='text-4xl font-bold text-blue-600 mb-4'>aTune</h1>
 
+            <div className='text-gray-500 font-medium'>
+              {`${dayOfWeek}, ${month} ${day}`}
+            </div>
+
             <div className='flex items-center justify-center gap-4 mb-4'>
               {userProfile?.images?.[0]?.url ? (
                 <img
@@ -159,33 +163,50 @@ function App() {
                   {userProfile?.display_name?.[0]?.toUpperCase() || '?'}
                 </div>
               )}
-              <h2 className='text-2xl text-gray-700'>
+              <h2 className='text-2xl text-gray-700 font-bold'>
                 Welcome, {userProfile?.display_name || 'there'}!
               </h2>
             </div>
 
             <div className='text-gray-500 font-medium'>
-              {`${dayOfWeek}, ${month} ${day}`}
+              <h2> What would you like to do today? </h2>
             </div>
+
           </div>
         </header>
       ) : (
-        <div style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/assets/homePageBg.png)` }}
-        className="flex-1 flex items-center justify-center bg-cover bg-center">
+        <div
+          style={{
+            backgroundImage: `url(${process.env.PUBLIC_URL}/assets/homePageBg2.png)`,
+          }}
+          className='flex-1 flex items-center justify-center bg-cover bg-center'
+        >
           <div className='flex-1 flex items-center justify-center'>
             <div className='text-center'>
-              <h1 className='text-6xl font-bold text-blue-600 mb-8'>aTune</h1>
-              <button
-                onClick={handleSpotifyLogin}
-                className='px-8 py-3 bg-green-600 text-white text-lg rounded-lg hover:bg-green-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex items-center justify-center gap-2'
-              >
-                <span>Login with Spotify</span>
-              </button>
+              {/* <h1 className='text-6xl font-bold text-blue-600 mb-8'>aTune</h1> */}
+              <div className="flex flex-col justify-center items-center h-screen text-center">
+                <img 
+                  src={`${process.env.PUBLIC_URL}/assets/logo.png`} 
+                  alt="logo" 
+                  className="mx-auto mb-4 w-32 h-32 rounded-full object-cover"
+                />
+                <div>
+                  <h2 className="mb-2 text-5xl font-bold">Build better habits.</h2>
+                  <h2 className="mb-2 text-5xl font-bold">Find your vibe.</h2>
+                  <h3 className='mb-4 text-2xl text-gray-500'>Find the beat that moves you.</h3>
+                </div>
+                <button
+                  onClick={handleSpotifyLogin}
+                  className='px-8 py-3 bg-indigo-500 text-white text-lg rounded-lg hover:bg-indigo-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 flex items-center justify-center gap-2'
+                >
+                  <span>Login with Spotify</span>
+                </button>
+              </div>
+                {/* <img src={`${process.env.PUBLIC_URL}/assets/logo.png`} alt="logo" /> */}
             </div>
           </div>
         </div>
       )}
-
       {userId && <Main userId={userId} accessToken={accessToken} />}
     </div>
   );

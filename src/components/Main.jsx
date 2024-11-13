@@ -42,47 +42,28 @@ function Main({ userId }) {
   };
 
   return (
-    <main className='container mx-auto p-4'>
-      {/* <YourTune seed={seeds[vibe]()} updateVibe={setVibe} /> */}
+    <div style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/assets/purpleWaveBg2.png)` }}
+    className="flex-1 flex items-center justify-center bg-cover bg-center">
+      <main className='container mx-auto p-4'>
+        {showCreateHabit && (
+          <CreateHabit
+            seeds={seeds}
+            setVibe={setVibe}
+            onClose={() => setShowCreateHabit(false)}
+            userId={userId}
+            onHabitCreated={handleHabitCreated}
+          />
+        )}
 
-      {/* <div id='VibeDropDown'>
-        <select
-          name='vibes'
-          id='vibes'
-          value={selectedValue}
-          onChange={handleChange}
-          className='w-full p-2 border rounded'
+        <UserHabits dailyHabits={dailyHabits} />
+        <button
+          onClick={() => setShowCreateHabit(true)}
+          className='bg-white text-indigo-400 px-5 py-3 rounded-full text-base cursor-pointer mt-5 hover:bg-indigo-500 transition-colors font-bold'
         >
-          <option value='' disabled>
-            Choose a vibe...
-          </option>
-          {Object.keys(seeds).map((key) => (
-            <option key={key} value={key}>
-              {key}
-            </option>
-          ))}
-        </select>
-      </div> */}
-
-      <button
-        onClick={() => setShowCreateHabit(true)}
-        className='bg-indigo-400 text-white px-6 py-3 rounded-full text-base cursor-pointer mt-5 hover:bg-indigo-500 transition-colors'
-      >
-        Add More
-      </button>
-
-      {showCreateHabit && (
-        <CreateHabit
-          seeds={seeds}
-          setVibe={setVibe}
-          onClose={() => setShowCreateHabit(false)}
-          userId={userId}
-          onHabitCreated={handleHabitCreated}
-        />
-      )}
-
-      <UserHabits dailyHabits={dailyHabits} />
-    </main>
+          +
+        </button>
+      </main>
+    </div>
   );
 }
 
