@@ -8,9 +8,14 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const authRoutes = require('./auth');
 
-app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  })
+);
 
 // Initialize Spotify API with credentials
 const spotifyApi = new SpotifyWebApi({

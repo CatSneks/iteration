@@ -15,25 +15,31 @@ function Main({ userId }) {
   //   setSelectedValue(value);
   // };
 
+  const fetchDailyHabits = async () => {
+    try {
+      const responseHabits = await fetch(
+        `http://localhost:3000/api/dayview?userId=${userId}`
+      );
+      const resultHabits = await responseHabits.json();
+      if (responseHabits.ok) {
+        setDailyHabits(resultHabits.dailyHabits[0].habits);
+      } else {
+        setError(resultHabits.error);
+      }
+    } catch (err) {
+      setError('Error fetching daily habits');
+    }
+  };
+
   useEffect(() => {
     if (!userId) return;
-    const fetchDailyHabits = async () => {
-      try {
-        const responseHabits = await fetch(
-          `http://localhost:3000/api/dayview?userId=${userId}`
-        );
-        const resultHabits = await responseHabits.json();
-        if (responseHabits.ok) {
-          setDailyHabits(resultHabits.dailyHabits[0].habits);
-        } else {
-          setError(resultHabits.error);
-        }
-      } catch (err) {
-        setError('Error fetching daily habits');
-      }
-    };
     fetchDailyHabits();
   }, [userId]);
+
+  const handleHabitCreated = () => {
+    fetchDailyHabits();
+    setShowCreateHabit(false);
+  };
 
   return (
     <main className='container mx-auto p-4'>
@@ -71,6 +77,7 @@ function Main({ userId }) {
           setVibe={setVibe}
           onClose={() => setShowCreateHabit(false)}
           userId={userId}
+          onHabitCreated={handleHabitCreated}
         />
       )}
 

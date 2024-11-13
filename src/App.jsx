@@ -9,6 +9,7 @@ function App() {
   const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
   const [userProfile, setUserProfile] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleSpotifyLogin = () => {
     window.location.href = 'http://localhost:5001/api/login';
@@ -22,19 +23,35 @@ function App() {
   };
 
   useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('http://localhost:5001/api/check-auth', {
+          credentials: 'include', // Important for sending cookies
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.authenticated) {
+            setUserId(data.userId);
+            setAccessToken(data.accessToken);
+          }
+        }
+      } catch (err) {
+        console.error('Auth check failed:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     // Parse URL parameters after OAuth redirect
     const params = new URLSearchParams(window.location.search);
-    const userIdParam = params.get('userId');
-    const accessTokenParam = params.get('accessToken');
     const errorParam = params.get('error');
 
     if (errorParam) {
       setError(errorParam);
-    } else if (userIdParam && accessTokenParam) {
-      setUserId(userIdParam);
-      setAccessToken(accessTokenParam);
-      // Clear URL parameters
-      window.history.replaceState({}, '', window.location.pathname);
+      setIsLoading(false);
+    } else {
+      checkAuth();
     }
 
     // Set date information
@@ -83,6 +100,7 @@ function App() {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
+            credentials: 'include', // Important for sending cookies
           });
           if (!response.ok) {
             throw new Error('Failed to fetch user data');
@@ -98,6 +116,14 @@ function App() {
     fetchUserData();
   }, [userId, accessToken]);
 
+  if (isLoading) {
+    return (
+      <div className='min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center'>
+        <div className='text-blue-600 text-xl'>Loading...</div>
+      </div>
+    );
+  }
+
   return (
     <div className='min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col'>
       {error && (
@@ -111,7 +137,6 @@ function App() {
       {userId ? (
         <header className='container mx-auto px-4 py-8'>
           <div className='relative text-center'>
-            {/* Logout button positioned in top right */}
             <button
               onClick={handleLogout}
               className='absolute right-0 top-0 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2'
@@ -119,7 +144,7 @@ function App() {
               Logout
             </button>
             <h1 className='text-4xl font-bold text-blue-600 mb-4'>aTune</h1>
-            {/* User Profile Section */}
+
             <div className='flex items-center justify-center gap-4 mb-4'>
               {userProfile?.images?.[0]?.url ? (
                 <img

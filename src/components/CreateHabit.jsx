@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import VibeDropDown from './VibeDropDown';
 
-function CreateHabit({ seeds, setVibe, onClose, userId }) {
+function CreateHabit({ seeds, setVibe, onClose, userId, onHabitCreated }) {
   const [habitName, setHabitName] = useState('');
   const [selectedMood, setSelectedMood] = useState('');
 
@@ -36,10 +36,12 @@ function CreateHabit({ seeds, setVibe, onClose, userId }) {
       const data = await response.json();
       console.log('Habit added successfully:', data);
 
-      // Clear form and close modal on success
+      // Clear form
       setHabitName('');
       setSelectedMood('');
-      onClose();
+
+      // Call the onHabitCreated callback to refresh the habits list
+      onHabitCreated();
     } catch (error) {
       console.error('Error adding new habit:', error);
       alert('Failed to add new habit. Please try again.');
