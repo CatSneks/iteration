@@ -50,7 +50,7 @@ router.get('/callback', async (req, res) => {
   const storedState = req.cookies ? req.cookies['spotify_auth_state'] : null;
 
   if (state === null || state !== storedState) {
-    res.redirect('/#/error/state-mismatch');
+    res.redirect('http://localhost:3000?error=state-mismatch');
     return;
   }
 
@@ -68,22 +68,13 @@ router.get('/callback', async (req, res) => {
       email: me.body.email,
     });
 
-    // Store tokens and basic user info
-    const userData = {
-      accessToken: data.body['access_token'],
-      refreshToken: data.body['refresh_token'],
-      expiresIn: data.body['expires_in'],
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      },
-    };
-
-    res.redirect('/api/me');
+    // Redirect to frontend with user ID and access token
+    res.redirect(
+      `http://localhost:3000?userId=${user.id}&accessToken=${data.body['access_token']}`
+    );
   } catch (error) {
     console.error('Error during authentication:', error);
-    res.redirect('/#/error/invalid-token');
+    res.redirect('http://localhost:3000?error=authentication-failed');
   }
 });
 
@@ -194,11 +185,36 @@ router.get('/logout', (req, res) => {
   // Clear the auth state cookie
   res.clearCookie('spotify_auth_state');
 
-  // Redirect to Spotify's logout page, then redirect back to your app
+  // Spotify's logout URL with post-logout redirect
   const spotifyLogoutUrl = 'https://accounts.spotify.com/logout';
-  const appRedirectUrl = 'http://localhost:3000'; // or whatever your frontend URL is
+  const appRedirectUrl = 'http://localhost:3000';
 
-  res.redirect(`${spotifyLogoutUrl}`);
+  // Create an HTML page that logs out of Spotify and then redirects
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Logging out...</title>
+      </head>
+      <body>
+        <script>
+          // First, load the Spotify logout page in an iframe
+          const iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.src = '${spotifyLogoutUrl}';
+          
+          // After a brief delay to ensure Spotify logout completes,
+          // redirect to the frontend
+          setTimeout(() => {
+            window.location.href = '${appRedirectUrl}';
+          }, 1000);
+          
+          document.body.appendChild(iframe);
+        </script>
+        <p>Logging you out...</p>
+      </body>
+    </html>
+  `);
 });
 
 module.exports = router;
