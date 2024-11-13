@@ -4,16 +4,11 @@ import YourTune from './YourTune';
 import CreateHabit from './CreateHabit';
 import UserHabits from './UserHabits';
 
-//dailyHabits = [{ 'Nature Walk' : `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_acousticness=${target_acousticness}&target_danceability=${target_danceability}` }]
-
-const tempData = [];
 function Main({ userId }) {
-  //setVibe will eventually be wrapped in a function that returns the sected habit and mood (seed) back to database;
   const [error, setError] = useState(null);
   const [vibe, setVibe] = useState('Nature Walk');
   const [dailyHabits, setDailyHabits] = useState([]);
-
-  //from VibeDropDown
+  const [showCreateHabit, setShowCreateHabit] = useState(false);
   const [selectedValue, setSelectedValue] = useState('');
 
   const handleChange = (event) => {
@@ -22,60 +17,65 @@ function Main({ userId }) {
   };
 
   useEffect(() => {
-    // once component mounts/renders
-    console.log({ userId });
     if (!userId) return;
     const fetchDailyHabits = async () => {
-      // fetch dailyHabits
-
       try {
-        console.log('userId in main', userId[0].id);
         const responseHabits = await fetch(
-          `http://localhost:3000/api/dayview?userId=${userId[0].id}`
-        ); // fetch per GET request for user dailyHabits from backend
-        const resultHabits = await responseHabits.json(); // parse response body as json
-        console.log('habits', resultHabits);
-        console.log('habits', resultHabits.dailyHabits[0].habits);
+          `http://localhost:3000/api/dayview?userId=${userId}`
+        );
+        const resultHabits = await responseHabits.json();
         if (responseHabits.ok) {
-          setDailyHabits(resultHabits.dailyHabits[0].habits); // set dailyHabits state with response data
+          setDailyHabits(resultHabits.dailyHabits[0].habits);
         } else {
-          setError(resultHabits.error); // set error if status !ok
+          setError(resultHabits.error);
         }
       } catch (err) {
         setError('Error fetching daily habits');
-      } // if can not fetch dailyHabits/set error state
+      }
     };
-    fetchDailyHabits(); // evoke fetchDailyHabits to start fetching dailyHabits
+    fetchDailyHabits();
   }, [userId]);
 
   return (
-    <main>
-     
-      {/*yourtune randomly generates a vibe: this should be replaced by createdHabit*/}
+    <main className='container mx-auto p-4'>
       <YourTune seed={seeds[vibe]()} updateVibe={setVibe} />
 
-      {/*<VibeDropDown options={seeds} updateVibe={setVibe} /> */}
-      <div id="VibeDropDown">
-        <select name='vibes' id='vibes'>
-          <option value='first vibe'></option>
-          <select
-            name='vibe'
-            id='vibe'
-            value={selectedValue}
-            onChange={handleChange}
-          ></select>
-          {/*add the input box for the habit to be created**/}
-          {Object.keys(seeds).map((key) => ( //keys(options) -> keys(seeds)
+      <div id='VibeDropDown'>
+        <select
+          name='vibes'
+          id='vibes'
+          value={selectedValue}
+          onChange={handleChange}
+          className='w-full p-2 border rounded'
+        >
+          <option value='' disabled>
+            Choose a vibe...
+          </option>
+          {Object.keys(seeds).map((key) => (
             <option key={key} value={key}>
               {key}
             </option>
           ))}
         </select>
       </div>
-      {/* <CreateHabit /> */}
-      <UserHabits dailyHabits={dailyHabits} />
-      
 
+      <button
+        onClick={() => setShowCreateHabit(true)}
+        className='bg-indigo-400 text-white px-6 py-3 rounded-full text-base cursor-pointer mt-5 hover:bg-indigo-500 transition-colors'
+      >
+        Add More
+      </button>
+
+      {showCreateHabit && (
+        <CreateHabit
+          seeds={seeds}
+          setVibe={setVibe}
+          onClose={() => setShowCreateHabit(false)}
+          userId={userId}
+        />
+      )}
+
+      <UserHabits dailyHabits={dailyHabits} />
     </main>
   );
 }
