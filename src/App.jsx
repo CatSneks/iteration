@@ -134,6 +134,7 @@ function App() {
           {error}
         </div>
       )}
+
       {userId ? (
         <header className='container mx-auto px-4 py-8'>
           <div className='relative text-center'>
@@ -143,6 +144,7 @@ function App() {
             >
               Logout
             </button>
+
             <h1 className='text-4xl font-bold text-blue-600 mb-4'>aTune</h1>
 
             <div className='flex items-center justify-center gap-4 mb-4'>
@@ -161,27 +163,26 @@ function App() {
                 Welcome, {userProfile?.display_name || 'there'}!
               </h2>
             </div>
+
             <div className='text-gray-500 font-medium'>
               {`${dayOfWeek}, ${month} ${day}`}
             </div>
           </div>
         </header>
       ) : (
-      <div>
-        <img src={`${process.env.PUBLIC_URL}/assets/homePageBg.png`} alt="backgroundImage" />
         <div className='flex-1 flex items-center justify-center'>
           <div className='text-center'>
-            <h1 className='text-6xl font-bold text-blue-600 mb-8'>aTune</h1>
+            <h1 className='text-6xl font-bold text-blue-600 mb-8'>Attune</h1>
             <button
               onClick={handleSpotifyLogin}
               className='px-8 py-3 bg-green-600 text-white text-lg rounded-lg hover:bg-green-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex items-center justify-center gap-2'
             >
-              {/* <span>Login with Spotify</span> */}
+              <span>Login with Spotify</span>
             </button>
           </div>
         </div>
-      </div>
       )}
+
       {userId && <Main userId={userId} accessToken={accessToken} />}
     </div>
   );
