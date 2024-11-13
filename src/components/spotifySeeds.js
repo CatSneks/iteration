@@ -4,7 +4,7 @@ function addRandomness(value, range = 0.1) {
 }
 
 const seeds = {
-  'Mood 1': () => {
+  'Nature Walk': () => {
     const seed_genres = 'folk,acoustic,country';
     const target_valence = addRandomness(0.6);
     const target_energy = addRandomness(0.5);
@@ -15,7 +15,7 @@ const seeds = {
     return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_acousticness=${target_acousticness}&target_danceability=${target_danceability}`;
   },
 
-  'Mood 2': () => {
+  'At the Gym': () => {
     const seed_genres = 'hip-hop,edm,rock';
     const target_valence = addRandomness(0.9);
     const target_energy = addRandomness(0.95);
@@ -25,7 +25,7 @@ const seeds = {
     return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_danceability=${target_danceability}`;
   },
 
-  'Mood 3': () => {
+  'Laundry or Dishes': () => {
     const seed_genres = 'pop,indie,electronic';
     const target_valence = addRandomness(0.7);
     const target_energy = addRandomness(0.65);
@@ -35,7 +35,7 @@ const seeds = {
     return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_danceability=${target_danceability}`;
   },
 
-  'Mood 4': () => {
+  Meditation: () => {
     const seed_genres = 'ambient,classical,chill';
     const target_valence = addRandomness(0.4);
     const target_energy = addRandomness(0.1);
@@ -46,7 +46,7 @@ const seeds = {
     return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_acousticness=${target_acousticness}&target_danceability=${target_danceability}`;
   },
 
-  'Mood 5': () => {
+  'Answering Emails': () => {
     const seed_genres = 'jazz,lo-fi,blues';
     const target_valence = addRandomness(0.6);
     const target_energy = addRandomness(0.4);
@@ -57,7 +57,7 @@ const seeds = {
     return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_acousticness=${target_acousticness}&target_danceability=${target_danceability}`;
   },
 
-  'Mood 6': () => {
+  'Yard Work': () => {
     const seed_genres = 'rock,blues,reggae';
     const target_valence = addRandomness(0.75);
     const target_energy = addRandomness(0.8);
@@ -67,7 +67,7 @@ const seeds = {
     return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_danceability=${target_danceability}`;
   },
 
-  'Mood 7': () => {
+  Reading: () => {
     const seed_genres = 'classical,ambient,acoustic';
     const target_valence = addRandomness(0.5);
     const target_energy = addRandomness(0.25);
