@@ -8,12 +8,6 @@ function Main({ userId }) {
   const [vibe, setVibe] = useState('Nature Walk');
   const [dailyHabits, setDailyHabits] = useState([]);
   const [showCreateHabit, setShowCreateHabit] = useState(false);
-  // const [selectedValue, setSelectedValue] = useState('');
-
-  // const handleChange = (event) => {
-  //   const value = event.target.value;
-  //   setSelectedValue(value);
-  // };
 
   const fetchDailyHabits = async () => {
     try {
