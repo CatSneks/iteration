@@ -1,25 +1,28 @@
 import React, { useState } from 'react';
 
-function VibeDropDown({ options, updateVibe }) {
+function VibeDropDown({ options, updateVibe, className }) {
   const [selectedValue, setSelectedValue] = useState('');
 
   const handleChange = (event) => {
     const value = event.target.value;
     setSelectedValue(value);
+    updateVibe(value);
   };
+
   return (
-    // <option value='' disabled>
-    //   choose one
-    // </option>
-    <select name='vibes' id='vibes'>
-      <option value='first vibe'></option>
-      <select
-        name='vibe'
-        id='vibe'
-        value={selectedValue}
-        onChange={handleChange}
-      ></select>
-      {/*add the input box for the habit to be created**/}
+    <select
+      name='vibes'
+      id='vibes'
+      value={selectedValue}
+      onChange={handleChange}
+      defaultValue=''
+      className={`w-full p-4 border border-gray-200 rounded-xl text-base bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
+        className || ''
+      }`}
+    >
+      <option value='' disabled>
+        Choose a mood...
+      </option>
       {Object.keys(options).map((key) => (
         <option key={key} value={key}>
           {key}
