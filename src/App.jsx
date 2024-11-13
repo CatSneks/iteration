@@ -170,15 +170,18 @@ function App() {
           </div>
         </header>
       ) : (
-        <div className='flex-1 flex items-center justify-center'>
-          <div className='text-center'>
-            <h1 className='text-6xl font-bold text-blue-600 mb-8'>Attune</h1>
-            <button
-              onClick={handleSpotifyLogin}
-              className='px-8 py-3 bg-green-600 text-white text-lg rounded-lg hover:bg-green-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex items-center justify-center gap-2'
-            >
-              <span>Login with Spotify</span>
-            </button>
+        <div style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/assets/homePageBg.png)` }}
+        className="flex-1 flex items-center justify-center bg-cover bg-center">
+          <div className='flex-1 flex items-center justify-center'>
+            <div className='text-center'>
+              <h1 className='text-6xl font-bold text-blue-600 mb-8'>aTune</h1>
+              <button
+                onClick={handleSpotifyLogin}
+                className='px-8 py-3 bg-green-600 text-white text-lg rounded-lg hover:bg-green-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex items-center justify-center gap-2'
+              >
+                <span>Login with Spotify</span>
+              </button>
+            </div>
           </div>
         </div>
       )}

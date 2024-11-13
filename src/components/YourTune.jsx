@@ -30,13 +30,13 @@ function YourTune({ seed }) {
   return (
     <section>
       <button onClick={getTune(seed)}>Reveal Tune</button>
-      {tune && <h2>{tune.name}</h2>}
-      {tune && <h3>{tune.artist}</h3>}
       {tune && (
         <a href={tune.uri}>
           <img alt={`album art for ${tune.artist}`} src={tune.artwork} />
         </a>
       )}
+      {tune && <h2>{tune.name}</h2>}
+      {tune && <h3>{tune.artist}</h3>}
     </section>
   );
 }

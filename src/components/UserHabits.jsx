@@ -16,10 +16,13 @@ function UserHabits({ dailyHabits }) {
   const habits = dailyHabits.map((habit, index) => {
     const [habitKey, habitDetails] = Object.entries(habit)[0];
     return (
-      <div key={index} className='mb-6'>
-        <h4 className='text-lg font-medium mb-2'>{habitKey}</h4>
-        <YourTune seed={habitDetails} />
-      </div>
+      <div
+      key={index}
+      className="mb-6 p-4 bg-white rounded-lg shadow-md hover:bg-indigo-500 hover:text-white transition-colors duration-300"
+    >
+      <h4 className="text-lg font-medium mb-2">{habitKey}</h4>
+      <YourTune seed={habitDetails} />
+    </div>
     );
   });
 
