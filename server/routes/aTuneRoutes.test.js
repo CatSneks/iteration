@@ -1,46 +1,42 @@
-// aTuneRoutes.test.js
 const request = require('supertest');
 const express = require('express');
 const aTuneRouter = require('../routes/aTuneRoutes');
-const aTuneController = require('../controllers/aTuneController');
+const aTuneModels = require('../models/aTuneModels');
 
+// Create a new Express app instance for testing
 const app = express();
 app.use(express.json());
 app.use('/aTune', aTuneRouter);
 
-// Mock aTuneController functions
-aTuneController.userId = (req, res, next) => {
-	req.userId = 'mockUserId';
-	next();
-};
+// Mock database models 
+jest.mock('../models/aTuneModels', () => ({
+  getUserId: jest.fn(),
+  getDailyHabits: jest.fn(),
+  makeDailyHabits: jest.fn(),
+}));
 
-aTuneController.getDaily = (req, res, next) => {
-	req.dailyHabits = [{ id: '1' }, { id: '2' }];
-	next();
-};
+// Set up mock implementations for controller methods
+aTuneModels.getUserId.mockImplementation(async () => 'mockUserId');
+aTuneModels.getDailyHabits.mockImplementation(async () => [{ id: '1' }, { id: '2' }]);
+aTuneModels.makeDailyHabits.mockImplementation(async () => ({ name: 'mockyHabit' }));
 
-aTuneController.addNewHabit = (req, res, next) => {
-	req.newHabit = { name: 'mockyHabit' };
-	next();
-};
-
-// Test cases below
+//Tests for the Routes
 describe('aTune Routes', () => {
-	it('GET /aTune/userId - should return mocked userId', async () => {
-		const response = await request(app).get('/aTune/userId');
-		expect(response.status).toBe(200);
-		expect(response.body).toEqual({ userId: 'mockUserId' });
-	});
+  it('GET /aTune/userId - should return mocked userId', async () => {
+    const response = await request(app).get('/aTune/userId?userName=testUser');
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ userId: 'mockUserId' });
+  });
 
-	it('GET /aTune/dayview - should return mocked daily habits', async () => {
-		const response = await request(app).get('/aTune/dayview');
-		expect(response.status).toBe(200);
-		expect(response.body).toEqual({ dailyHabits: [{ id: '1' }, { id: '2' }] });
-	});
+  it('GET /aTune/dayview - should return mocked daily habits', async () => {
+    const response = await request(app).get('/aTune/dayview?userId=mockUserId');
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ dailyHabits: [{ id: '1' }, { id: '2' }] });
+  });
 
-	it('POST /aTune/addNewHabit - should return newly added habit', async () => {
-		const response = await request(app).post('/aTune/addNewHabit');
-		expect(response.status).toBe(200);
-		expect(response.body).toEqual({ newHabit: { name: 'mockyHabit' } });
-	});
+  it('POST /aTune/addNewHabit - should return newly added habit', async () => {
+    const response = await request(app).post('/aTune/addNewHabit').send({ habit: 'mockHabit' });
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ newHabit: { name: 'mockyHabit' } });
+  });
 });
