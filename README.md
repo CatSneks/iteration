@@ -18,10 +18,9 @@ resolve conflicts
 ✨✨✨ PATRICE & SPENCER TO DO LIST ✨✨✨
 <!-- 1) get request for users daily habits (hardcoded info in supabase at first) -->
 <!-- 2) get request to query spotify and handle the response -->
-3) Hardcode a input user's name, use that to query Supabase for the id
 4) Pass the id into the /dayview route to get the habits attribute row to access the mood
-<!-- MVP STRETCH -->
-<!-- 5) post/put/patch method to actually add habits -->
+MVP STRETCH
+5) post/put/patch method to actually add habits
 
 ✨✨✨ COMPONENT STRUCTURE ✨✨✨
 /src/index.js
