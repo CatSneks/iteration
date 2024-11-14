@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Main from './components/Main';
+//import aTuneLogoFull from '../public/assets/atuneLogoFull.png'
 
 function App() {
   const [userId, setUserId] = useState(null);
@@ -170,9 +171,13 @@ function App() {
               Edit
             </button>
 
-            <h1 className='text-4xl font-bold text-blue-600 mb-4'>aTune</h1>
+            <img
+                  src={`${process.env.PUBLIC_URL}/assets/aTuneLogoFull.png`}
+                  alt='logoFull'
+                  className='mx-auto mb-4 w-32'
+            />
 
-            <div className='text-gray-500 font-medium text-2xl mb-6'>
+            <div className='text-gray-600 font-normal text-2xl mb-6'>
               {`${dayOfWeek}, ${month} ${day}`}
             </div>
 
@@ -184,7 +189,7 @@ function App() {
                   className='w-12 h-12 rounded-full border-2 border-blue-600'
                 />
               ) : (
-                <div className='w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white text-xl'>
+                <div className='w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl'>
                   {userProfile?.display_name?.[0]?.toUpperCase() || '?'}
                 </div>
               )}
@@ -193,7 +198,7 @@ function App() {
               </h2>
             </div>
 
-            <div className='text-gray-500 font-medium text-2xl'>
+            <div className='text-gray-600 font-normal text-2xl pt-12'>
               <h2>What would you like to do today?</h2>
             </div>
           </div>
