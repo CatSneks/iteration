@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Main from './components/Main';
 import { Menu } from 'lucide-react';
 import NavBar from './components/NavBar';
+import Settings from './components/Settings';
 
 function App() {
   const [userId, setUserId] = useState(null);
@@ -14,6 +15,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const getTimeBasedGreeting = () => {
     const hour = new Date().getHours();
@@ -40,6 +42,19 @@ function App() {
   const handleEdit = () => {
     setIsEditMode(!isEditMode);
     setIsNavOpen(false);
+  };
+
+  const handleSettingsClick = () => {
+    setIsSettingsOpen(!isSettingsOpen);
+  };
+
+  const handleNavClose = () => {
+    setIsNavOpen(false);
+    setIsSettingsOpen(false);
+  };
+
+  const handleSettingsClose = () => {
+    setIsSettingsOpen(false);
   };
 
   useEffect(() => {
@@ -143,14 +158,21 @@ function App() {
 
   return (
     <div className='min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col'>
-      <NavBar
-        isOpen={isNavOpen}
-        onClose={() => setIsNavOpen(false)}
-        onLogout={handleLogout}
-        onEdit={handleEdit}
-        isEditMode={isEditMode}
-        userProfile={userProfile}
-      />
+      {userId && (
+        <>
+          <NavBar
+            isOpen={isNavOpen}
+            onClose={handleNavClose}
+            onLogout={handleLogout}
+            onEdit={handleEdit}
+            isEditMode={isEditMode}
+            userProfile={userProfile}
+            onSettingsClick={handleSettingsClick}
+          />
+
+          <Settings isOpen={isSettingsOpen} onClose={handleSettingsClose} />
+        </>
+      )}
 
       {error && (
         <div
@@ -172,9 +194,9 @@ function App() {
             </button>
 
             <img
-                  src={`${process.env.PUBLIC_URL}/assets/aTuneLogoFull.png`}
-                  alt='logoFull'
-                  className='mx-auto mb-4 w-32'
+              src={`${process.env.PUBLIC_URL}/assets/aTuneLogoFull.png`}
+              alt='logoFull'
+              className='mx-auto mb-4 w-32'
             />
 
             <div className='text-gray-600 font-normal text-2xl mb-6'>
