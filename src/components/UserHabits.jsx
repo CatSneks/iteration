@@ -23,8 +23,8 @@ const UserHabits = ({ dailyHabits, isEditMode }) => {
   });
 
   return (
-    <section className="mt-8">
-      <h3 className="text-xl font-semibold mb-4">Habits</h3>
+    <section>
+      {/* <h3 className="text-xl font-semibold mb-10">Habits</h3> */}
       <div className="space-y-6">{habits}</div>
     </section>
   );

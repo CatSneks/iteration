@@ -171,9 +171,13 @@ function App() {
               <Menu size={24} />
             </button>
 
-            <h1 className='text-4xl font-bold text-blue-600 mb-4'>aTune</h1>
+            <img
+                  src={`${process.env.PUBLIC_URL}/assets/aTuneLogoFull.png`}
+                  alt='logoFull'
+                  className='mx-auto mb-4 w-32'
+            />
 
-            <div className='text-gray-500 font-medium text-2xl mb-6'>
+            <div className='text-gray-600 font-normal text-2xl mb-6'>
               {`${dayOfWeek}, ${month} ${day}`}
             </div>
 
@@ -182,7 +186,7 @@ function App() {
               {(userProfile?.display_name || 'there').split(' ')[0]}
             </h2>
 
-            <div className='text-gray-500 font-medium text-2xl'>
+            <div className='text-gray-600 font-normal text-2xl pt-12'>
               <h2>What would you like to do today?</h2>
             </div>
           </div>

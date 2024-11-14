@@ -42,7 +42,7 @@ function Main({ userId, isEditMode }) {
 
   return (
     <div style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/assets/purpleWaveBg2.png)` }}
-    className="flex-1 flex items-center justify-center bg-cover bg-center">
+    className="flex-1 flex items-center justify-center bg-cover bg-bottom">
       <main className='container mx-auto p-4'>
         {showCreateHabit && (
           <CreateHabit
