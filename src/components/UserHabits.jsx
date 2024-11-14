@@ -1,7 +1,7 @@
 import React from 'react';
 import YourTune from './YourTune';
 
-const UserHabits = ({ dailyHabits }) => {
+const UserHabits = ({ dailyHabits, isEditMode }) => {
   if (!dailyHabits || dailyHabits.length === 0) {
     return (
       <section className="mt-8">
@@ -17,7 +17,7 @@ const UserHabits = ({ dailyHabits }) => {
     const [habitKey, habitDetails] = Object.entries(habit)[0];
     return (
       <div key={index} className="mb-6">
-        <YourTune seed={habitDetails} habitName={habitKey} />
+        <YourTune seed={habitDetails} habitName={habitKey} isEditMode={isEditMode} />
       </div>
     );
   });

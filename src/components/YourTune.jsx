@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 
-const YourTune = ({ seed, habitName }) => {
+const YourTune = ({ seed, habitName, isEditMode }) => {
   const [tune, setTune] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const handleClick = async () => {
+    setIsCollapsed(!isCollapsed); // sets isCollapsed state to the opposite of what it currently is
+    console.log({isCollapsed}, {isEditMode});
+
     if (tune) {
       setTune(null);
       setContentHeight(0);
       return;
     }
 
-    setIsLoading(true);
+    setIsLoading(true); // isLoading is true until the code block below runs and finally isLoading is set to false
     try {
       const response = await fetch(`http://localhost:3000/recommendations?seed_genres=${seed}`, {
         method: 'GET',
@@ -37,6 +41,10 @@ const YourTune = ({ seed, habitName }) => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleDelete = () => {
+    console.log('Deleted habit:', habitName);
   };
 
   return (
@@ -90,7 +98,18 @@ const YourTune = ({ seed, habitName }) => {
           )}
         </div>
       </div>
-      {isLoading && (
+      {isEditMode && isCollapsed && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent collapsing
+            handleDelete();
+          }}
+          className="absolute top-0 right-0 mt-2 mr-2 bg-indigo-400 text-white px-4 py-2 rounded-full hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-bold"
+        >
+          -
+        </button>
+      )}
+      {isLoading && ( // if isLoading is true, ease in animation
         <div 
           className="absolute bottom-0 left-0 h-0.5 bg-blue-500 transition-all duration-300"
           style={{

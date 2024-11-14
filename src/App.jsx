@@ -10,6 +10,7 @@ function App() {
   const [day, setDay] = useState('');
   const [userProfile, setUserProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const handleSpotifyLogin = () => {
     window.location.href = 'http://localhost:5001/api/login';
@@ -22,6 +23,11 @@ function App() {
     setUserProfile(null);
   };
 
+  const handleEdit = () => {
+    setIsEditMode(!isEditMode);
+    console.log({isEditMode});
+  };
+  
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -140,9 +146,17 @@ function App() {
           <div className='relative text-center'>
             <button
               onClick={handleLogout}
-              className='absolute right-0 top-0 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2'
+              className='absolute right-0 top-0 px-4 py-2 bg-gray-200 hover:bg-indigo-300 text-gray-700 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2'
             >
               Logout
+            </button>
+            <button
+              onClick={handleEdit}
+              className={`absolute right-0 top-[3rem] px-4 py-2 
+                ${isEditMode ? 'bg-indigo-500 text-white' : 'bg-gray-200 text-gray-700'} 
+                hover:bg-indigo-300 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2`}
+            >
+              Edit
             </button>
 
             <h1 className='text-4xl font-bold text-blue-600 mb-4'>aTune</h1>
@@ -207,7 +221,7 @@ function App() {
           </div>
         </div>
       )}
-      {userId && <Main userId={userId} accessToken={accessToken} />}
+      {userId && <Main userId={userId} accessToken={accessToken} isEditMode={isEditMode} />}
     </div>
   );
 }

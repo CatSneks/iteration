@@ -3,7 +3,7 @@ import seeds from './spotifySeeds';
 import CreateHabit from './CreateHabit';
 import UserHabits from './UserHabits';
 
-function Main({ userId }) {
+function Main({ userId, isEditMode }) {
   const [error, setError] = useState(null);
   const [vibe, setVibe] = useState('Nature Walk');
   const [dailyHabits, setDailyHabits] = useState([]);
@@ -54,7 +54,7 @@ function Main({ userId }) {
           />
         )}
 
-        <UserHabits dailyHabits={dailyHabits} />
+        <UserHabits dailyHabits={dailyHabits} isEditMode={isEditMode} />
         <button
           onClick={() => setShowCreateHabit(true)}
           className='bg-white text-indigo-400 px-5 py-3 rounded-full text-base cursor-pointer mt-5 hover:bg-indigo-500 transition-colors font-bold'
