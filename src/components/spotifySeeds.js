@@ -24,33 +24,13 @@ const seeds = {
 
     return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_acousticness=${target_acousticness}&target_danceability=${target_danceability}`;
   },
-  'Polish': () => {
-    const seed_genres = 'polska muzyka';  // Polish music-related genres
-    const target_valence = addRandomness(0.75);  // Positive, upbeat mood
-    const target_energy = addRandomness(0.7);  // High energy, modern pop vibes
-    const target_tempo = 110;  // Upbeat tempo typical of modern Polish pop
-    const target_acousticness = addRandomness(0.3);  // Moderate acousticness, mix of electronic and traditional sounds
-    const target_danceability = addRandomness(0.7);  // Danceable beats, common in Polish pop
-
-    return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_acousticness=${target_acousticness}&target_danceability=${target_danceability}`;
-  },
   'EDM': () => {
-    const seed_genres = 'progressive house,big room house,future house,trap,dubstep';  // Festival EDM genres
+    const seed_genres = 'progressive house,big room house,future house,trap';  // Festival EDM genres
     const target_valence = addRandomness(0.9);  // High valence for positive, uplifting festival vibes
     const target_energy = addRandomness(0.85); // High energy, perfect for festival crowds
     const target_tempo = 128;  // Common festival EDM tempo (range 120-130 BPM)
     const target_acousticness = addRandomness(0.05);  // Very low acousticness, electronic-heavy
     const target_danceability = addRandomness(0.85);  // High danceability, as it's festival-ready
-
-    return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_acousticness=${target_acousticness}&target_danceability=${target_danceability}`;
-  },
-  '90s-pop': () => {
-    const seed_genres = 'pop,90s pop,dance pop,teen pop';  // 90s Pop music genres
-    const target_valence = addRandomness(0.75);  // Upbeat and positive vibe typical of 90s pop
-    const target_energy = addRandomness(0.6);   // Medium to high energy, perfect for 90s pop
-    const target_tempo = 115;  // Typical tempo for 90s pop, ranging between 100-120 BPM
-    const target_acousticness = addRandomness(0.2);  // Low acousticness, more electronic production
-    const target_danceability = addRandomness(0.8);  // Danceable tracks, common for 90s pop hits
 
     return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_acousticness=${target_acousticness}&target_danceability=${target_danceability}`;
   },
