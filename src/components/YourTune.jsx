@@ -42,8 +42,28 @@ const YourTune = ({ seed, habitName, isEditMode }) => {
     }
   };
 
-  const handleDelete = () => {
-    console.log('Deleted habit:', habitName);
+  const handleDelete = () => async () => {
+    try {
+      const response = await fetch('http://localhost:3000/deleteHabit', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_id: 'USER_ID', habit: habitName }), // replace 'USER_ID' with the actual user ID
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      console.log('Deleted habit:', data.updatedHabits); 
+      //might have to refresh updated habits
+     
+    } catch (error) {
+      console.error('Error deleting habit:', error);
+    }
+
   };
 
   return (

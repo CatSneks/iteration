@@ -120,4 +120,37 @@ const makeDailyHabits = async (user_id, newHabit) => {
   }
 };
 
-module.exports = { getDailyHabits, makeDailyHabits, getUserId, createUser };
+const deleteDailyHabit = async (user_id, habit) => {
+  try {
+    const { data: existingData, error: fetchError } = await supabase
+      .from('Users') //from user table
+      .select('habits') // selecting the habits column
+      .eq('id', user_id) // filtered by user_id
+      .single(); //gets one object -- don't know if we need
+
+    if (fetchError) throw fetchError;
+
+    const currentHabits = existingData.habits || [];
+    //uses filter to remove the specified habit we're deleting from current habits
+    const updatedHabits = currentHabits.filter((h) => h !== habit);
+
+    const { data, error } = await supabase
+      .from('Users') // from Users table
+      .update({ habits: updatedHabits }) // selecting the habits column to new updated array
+      .eq('id', user_id); // filtered by user_id
+
+    if (error) throw error;
+    return data; // return fetched data
+  } catch (error) {
+    console.error('Error updating daily habits: ', error);
+    throw error;
+  }
+};
+
+module.exports = {
+  getDailyHabits,
+  makeDailyHabits,
+  deleteDailyHabit,
+  getUserId,
+  createUser,
+};

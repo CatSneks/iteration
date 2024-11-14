@@ -66,4 +66,44 @@ const addNewHabit = async (req, res, next) => {
   }
 };
 
-module.exports = { getDaily, userId, addNewHabit };
+const deleteHabit = async (req, res, next) => {
+  try {
+    const { user_id, habit } = req.body;
+
+    if (!user_id || !habit) {
+      return next({
+        log: 'Missing required fields in deleteHabit',
+        status: 400,
+        message: {
+          err: 'User ID and habit to be deleted are required',
+        },
+      });
+    }
+
+    const updatedHabits = await aTuneModels.deleteDailyHabit(user_id, habit);
+
+    if (updatedHabits) {
+      req.updatedHabits = updatedHabits; // Store the updated habits list in the request object for use in the next middleware
+      return next();
+    } else {
+      return next({
+        log: 'Habit not found in deleteHabit',
+        status: 404,
+        message: {
+          err: 'Habit not found',
+        },
+      });
+    }
+  } catch (error) {
+    console.error('Error with aTuneController.deleteHabit:', error);
+    return next({
+      log: `Error in aTuneController.deleteHabit middleware. Error: ${error.message}`,
+      status: 500,
+      message: {
+        err: 'An error occurred while deleting the habit from Supabase',
+      },
+    });
+  }
+};
+
+module.exports = { getDaily, userId, addNewHabit, deleteHabit };
