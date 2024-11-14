@@ -11,6 +11,17 @@ function App() {
   const [userProfile, setUserProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const getTimeBasedGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour >= 6 && hour < 12) {
+      return 'Good morning';
+    } else if (hour >= 12 && hour < 18) {
+      return 'Good afternoon';
+    } else {
+      return 'Good evening';
+    }
+  };
+
   const handleSpotifyLogin = () => {
     window.location.href = 'http://localhost:5001/api/login';
   };
@@ -147,11 +158,11 @@ function App() {
 
             <h1 className='text-4xl font-bold text-blue-600 mb-4'>aTune</h1>
 
-            <div className='text-gray-500 font-medium'>
+            <div className='text-gray-500 font-medium text-2xl mb-6'>
               {`${dayOfWeek}, ${month} ${day}`}
             </div>
 
-            <div className='flex items-center justify-center gap-4 mb-4'>
+            <div className='flex items-center justify-center gap-4 mb-6'>
               {userProfile?.images?.[0]?.url ? (
                 <img
                   src={userProfile.images[0].url}
@@ -163,15 +174,14 @@ function App() {
                   {userProfile?.display_name?.[0]?.toUpperCase() || '?'}
                 </div>
               )}
-              <h2 className='text-2xl text-gray-700 font-bold'>
-                Welcome, {userProfile?.display_name || 'there'}!
+              <h2 className='text-4xl font-bold text-custom-blue'>
+                {getTimeBasedGreeting()}, {userProfile?.display_name || 'there'}
               </h2>
             </div>
 
-            <div className='text-gray-500 font-medium'>
-              <h2> What would you like to do today? </h2>
+            <div className='text-gray-500 font-medium text-2xl'>
+              <h2>What would you like to do today?</h2>
             </div>
-
           </div>
         </header>
       ) : (
@@ -183,17 +193,20 @@ function App() {
         >
           <div className='flex-1 flex items-center justify-center'>
             <div className='text-center'>
-              {/* <h1 className='text-6xl font-bold text-blue-600 mb-8'>aTune</h1> */}
-              <div className="flex flex-col justify-center items-center h-screen text-center">
-                <img 
-                  src={`${process.env.PUBLIC_URL}/assets/logo.png`} 
-                  alt="logo" 
-                  className="mx-auto mb-4 w-32 h-32 rounded-full object-cover"
+              <div className='flex flex-col justify-center items-center h-screen text-center'>
+                <img
+                  src={`${process.env.PUBLIC_URL}/assets/logo.png`}
+                  alt='logo'
+                  className='mx-auto mb-4 w-32 h-32 rounded-full object-cover'
                 />
                 <div>
-                  <h2 className="mb-2 text-5xl font-bold">Build better habits.</h2>
-                  <h2 className="mb-2 text-5xl font-bold">Find your vibe.</h2>
-                  <h3 className='mb-4 text-2xl text-gray-500'>Find the beat that moves you.</h3>
+                  <h2 className='mb-2 text-5xl font-bold'>
+                    Build better habits.
+                  </h2>
+                  <h2 className='mb-2 text-5xl font-bold'>Find your vibe.</h2>
+                  <h3 className='mb-4 text-2xl text-gray-500'>
+                    Find the beat that moves you.
+                  </h3>
                 </div>
                 <button
                   onClick={handleSpotifyLogin}
@@ -202,7 +215,6 @@ function App() {
                   <span>Login with Spotify</span>
                 </button>
               </div>
-                {/* <img src={`${process.env.PUBLIC_URL}/assets/logo.png`} alt="logo" /> */}
             </div>
           </div>
         </div>
