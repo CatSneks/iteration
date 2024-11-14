@@ -74,26 +74,22 @@ const deleteHabit = async (req, res, next) => {
       return next({
         log: 'Missing required fields in deleteHabit',
         status: 400,
-        message: {
-          err: 'User ID and habit to be deleted are required',
-        },
+        message: { err: 'User ID and habit to be deleted are required' },
       });
     }
 
     const updatedHabits = await aTuneModels.deleteDailyHabit(user_id, habit);
 
-    if (updatedHabits) {
-      req.updatedHabits = updatedHabits; // Store the updated habits list in the request object for use in the next middleware
-      return next();
-    } else {
+    if (!updatedHabits) {
       return next({
-        log: 'Habit not found in deleteHabit',
-        status: 404,
-        message: {
-          err: 'Habit not found',
-        },
+        log: 'No habits returned after deletion',
+        status: 500,
+        message: { err: 'Failed to delete habit' },
       });
     }
+
+    req.updatedHabits = updatedHabits;
+    return next();
   } catch (error) {
     console.error('Error with aTuneController.deleteHabit:', error);
     return next({

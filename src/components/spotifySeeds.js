@@ -36,13 +36,14 @@ const seeds = {
 
     return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_acousticness=${target_acousticness}&target_danceability=${target_danceability}`;
   },
-  'Top of the Charts': () => {
-    const seed_genres = 'pop,hip hop,rap,dance pop,edm'; // Popular genres in the USA charts
-    const target_valence = addRandomness(0.75); // Upbeat, energetic vibe that works across pop, hip hop, and dance
-    const target_energy = addRandomness(0.8); // High energy, reflecting the upbeat nature of current hits
-    const target_tempo = 120; // Typical tempo for chart-topping hits across genres (usually 100-130 BPM)
-    const target_acousticness = addRandomness(0.2); // Low acousticness, most chart-toppers are heavily produced
-    const target_danceability = addRandomness(0.85); // Very danceable, as most hits are meant to be catchy and fun
+
+  'Latin Pop': () => {
+    const seed_genres = 'latin pop,reggaeton,latin,latin dance'; // Modern Latin pop genres
+    const target_valence = addRandomness(0.8); // High valence for upbeat Latin feel
+    const target_energy = addRandomness(0.75); // High energy for dancing
+    const target_tempo = 98; // Typical reggaeton/Latin pop tempo
+    const target_acousticness = addRandomness(0.25); // Lower acousticness, modern production
+    const target_danceability = addRandomness(0.9); // Very high danceability
 
     return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_acousticness=${target_acousticness}&target_danceability=${target_danceability}`;
   },
@@ -56,6 +57,37 @@ const seeds = {
 
     return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_acousticness=${target_acousticness}&target_danceability=${target_danceability}`;
   },
+  'Modern Metal': () => {
+    const seed_genres = 'metal,metalcore,progressive metal,hard rock'; // Contemporary metal genres
+    const target_valence = addRandomness(0.4); // Lower valence for intensity
+    const target_energy = addRandomness(0.95); // Very high energy
+    const target_tempo = 140; // Fast tempo typical of metal
+    const target_acousticness = addRandomness(0.1); // Very low acousticness
+    const target_danceability = addRandomness(0.45); // Lower danceability, focus on intensity
+
+    return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_acousticness=${target_acousticness}&target_danceability=${target_danceability}`;
+  },
+  'Modern R&B': () => {
+    const seed_genres = 'r-n-b,urban contemporary,soul,alt-r-n-b'; // Contemporary R&B sounds
+    const target_valence = addRandomness(0.65); // Moderate-high valence for smooth vibes
+    const target_energy = addRandomness(0.55); // Moderate energy typical of modern R&B
+    const target_tempo = 95; // Mid-tempo groove common in modern R&B
+    const target_acousticness = addRandomness(0.3); // Lower acousticness, modern production
+    const target_danceability = addRandomness(0.75); // High danceability for R&B grooves
+
+    return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_acousticness=${target_acousticness}&target_danceability=${target_danceability}`;
+  },
+  'Top of the Charts': () => {
+    const seed_genres = 'pop,hip hop,rap,dance pop,edm'; // Popular genres in the USA charts
+    const target_valence = addRandomness(0.75); // Upbeat, energetic vibe that works across pop, hip hop, and dance
+    const target_energy = addRandomness(0.8); // High energy, reflecting the upbeat nature of current hits
+    const target_tempo = 120; // Typical tempo for chart-topping hits across genres (usually 100-130 BPM)
+    const target_acousticness = addRandomness(0.2); // Low acousticness, most chart-toppers are heavily produced
+    const target_danceability = addRandomness(0.85); // Very danceable, as most hits are meant to be catchy and fun
+
+    return `?seed_genres=${seed_genres}&target_valence=${target_valence}&target_energy=${target_energy}&target_tempo=${target_tempo}&target_acousticness=${target_acousticness}&target_danceability=${target_danceability}`;
+  },
+
   // 'Nature Walk': () => {
   //   const seed_genres = 'folk,acoustic,country';
   //   const target_valence = addRandomness(0.6);
