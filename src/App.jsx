@@ -36,7 +36,6 @@ function App() {
 
   const handleEdit = () => {
     setIsEditMode(!isEditMode);
-    console.log({isEditMode});
   };
   
   useEffect(() => {

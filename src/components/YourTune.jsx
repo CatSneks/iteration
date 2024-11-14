@@ -8,7 +8,6 @@ const YourTune = ({ seed, habitName, isEditMode }) => {
 
   const handleClick = async () => {
     setIsCollapsed(!isCollapsed); // sets isCollapsed state to the opposite of what it currently is
-    console.log({isCollapsed}, {isEditMode});
 
     if (tune) {
       setTune(null);
