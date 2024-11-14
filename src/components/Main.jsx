@@ -30,6 +30,11 @@ function Main({ userId }) {
     fetchDailyHabits();
   }, [userId]);
 
+  const sortedSeeds = Object.keys(seeds).sort().reduce((acc, key) => {
+    acc[key] = seeds[key];
+    return acc;
+  }, {});
+
   const handleHabitCreated = () => {
     fetchDailyHabits();
     setShowCreateHabit(false);
@@ -41,7 +46,7 @@ function Main({ userId }) {
       <main className='container mx-auto p-4'>
         {showCreateHabit && (
           <CreateHabit
-            seeds={seeds}
+            seeds={sortedSeeds}
             setVibe={setVibe}
             onClose={() => setShowCreateHabit(false)}
             userId={userId}
