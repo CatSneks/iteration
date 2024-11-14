@@ -246,7 +246,23 @@ router.get('/me', async (req, res) => {
   }
 });
 
-// Logout endpoint
+// endpoint to check all available genres
+router.get('/available-genres', async (req, res) => {
+  try {
+    const { accessToken } = req.cookies;
+    spotifyApi.setAccessToken(accessToken);
+
+    const response = await spotifyApi.getAvailableGenreSeeds();
+    res.json(response.body.genres);
+  } catch (error) {
+    console.error('Error getting available genres:', error);
+    res.status(500).json({
+      error: 'Failed to get available genres',
+      details: error.message,
+    });
+  }
+});
+
 // Logout endpoint
 router.get('/logout', async (req, res) => {
   // Clear all local cookies
