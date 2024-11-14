@@ -188,13 +188,23 @@ function App() {
           <div className='relative text-center'>
             <button
               onClick={() => setIsNavOpen(true)}
-              className='absolute left-4 top-4 p-2 hover:bg-gray-100 rounded-lg'
+              className='absolute left-4 top-4 p-2.5 
+                        hover:bg-indigo-50 rounded-xl
+                        text-gray-600 hover:text-indigo-600
+                        transition-all duration-300 ease-in-out
+                        hover:scale-110 hover:shadow-md
+                        focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
+                        group'
+              aria-label='Open menu'
             >
-              <Menu size={24} />
+              <Menu
+                size={24}
+                className='transition-transform duration-300 ease-in-out group-hover:rotate-180'
+              />
             </button>
 
             <img
-              src={`${process.env.PUBLIC_URL}/assets/aTuneLogoFull.png`}
+              src={`${process.env.PUBLIC_URL}/assets/atuneLogoFull.png`}
               alt='logoFull'
               className='mx-auto mb-4 w-32'
             />

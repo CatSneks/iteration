@@ -123,24 +123,34 @@ const makeDailyHabits = async (user_id, newHabit) => {
 const deleteDailyHabit = async (user_id, habit) => {
   try {
     const { data: existingData, error: fetchError } = await supabase
-      .from('Users') //from user table
-      .select('habits') // selecting the habits column
-      .eq('id', user_id) // filtered by user_id
-      .single(); //gets one object -- don't know if we need
+      .from('Users')
+      .select('habits')
+      .eq('id', user_id)
+      .single();
 
     if (fetchError) throw fetchError;
 
-    const currentHabits = existingData.habits || [];
-    //uses filter to remove the specified habit we're deleting from current habits
-    const updatedHabits = currentHabits.filter((h) => h !== habit);
+    if (!existingData || !existingData.habits) {
+      throw new Error('No habits found for user');
+    }
 
+    const currentHabits = existingData.habits;
+
+    // Filter out the habit by checking if the object has the habit name as a key
+    const updatedHabits = currentHabits.filter((habitObj) => {
+      return !Object.hasOwn(habitObj, habit);
+    });
+
+    // Update the database with new habits array
     const { data, error } = await supabase
-      .from('Users') // from Users table
-      .update({ habits: updatedHabits }) // selecting the habits column to new updated array
-      .eq('id', user_id); // filtered by user_id
+      .from('Users')
+      .update({ habits: updatedHabits })
+      .eq('id', user_id)
+      .select();
 
     if (error) throw error;
-    return data; // return fetched data
+
+    return updatedHabits;
   } catch (error) {
     console.error('Error updating daily habits: ', error);
     throw error;

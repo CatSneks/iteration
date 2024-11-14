@@ -15,7 +15,7 @@ router.post('/addNewHabit', aTuneController.addNewHabit, (req, res) => {
   return res.status(200).json({ newHabit: req.newHabit });
 });
 
-router.delete('deleteHabit', aTuneController.deleteHabit, (req, res) => {
+router.delete('/deleteHabit', aTuneController.deleteHabit, (req, res) => {
   return res.status(200).json({ updatedHabits: req.updatedHabits });
 });
 
