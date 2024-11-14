@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Main from './components/Main';
-//import aTuneLogoFull from '../public/assets/atuneLogoFull.png'
+import { Menu } from 'lucide-react';
+import NavBar from './components/NavBar';
 
 function App() {
   const [userId, setUserId] = useState(null);
@@ -12,6 +13,7 @@ function App() {
   const [userProfile, setUserProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   const getTimeBasedGreeting = () => {
     const hour = new Date().getHours();
@@ -37,14 +39,14 @@ function App() {
 
   const handleEdit = () => {
     setIsEditMode(!isEditMode);
-    console.log({isEditMode});
+    setIsNavOpen(false);
   };
-  
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const response = await fetch('http://localhost:5001/api/check-auth', {
-          credentials: 'include', // Important for sending cookies
+          credentials: 'include',
         });
 
         if (response.ok) {
@@ -61,7 +63,6 @@ function App() {
       }
     };
 
-    // Parse URL parameters after OAuth redirect
     const params = new URLSearchParams(window.location.search);
     const errorParam = params.get('error');
 
@@ -72,7 +73,6 @@ function App() {
       checkAuth();
     }
 
-    // Set date information
     const TodaysDate = () => {
       const today = new Date();
       const months = [
@@ -109,7 +109,6 @@ function App() {
     TodaysDate();
   }, []);
 
-  // Function to fetch user data after authentication
   useEffect(() => {
     const fetchUserData = async () => {
       if (userId && accessToken) {
@@ -118,7 +117,7 @@ function App() {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-            credentials: 'include', // Important for sending cookies
+            credentials: 'include',
           });
           if (!response.ok) {
             throw new Error('Failed to fetch user data');
@@ -144,6 +143,15 @@ function App() {
 
   return (
     <div className='min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col'>
+      <NavBar
+        isOpen={isNavOpen}
+        onClose={() => setIsNavOpen(false)}
+        onLogout={handleLogout}
+        onEdit={handleEdit}
+        isEditMode={isEditMode}
+        userProfile={userProfile}
+      />
+
       {error && (
         <div
           className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative'
@@ -157,18 +165,10 @@ function App() {
         <header className='container mx-auto px-4 py-8'>
           <div className='relative text-center'>
             <button
-              onClick={handleLogout}
-              className='absolute right-0 top-0 px-4 py-2 bg-gray-200 hover:bg-indigo-300 text-gray-700 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2'
+              onClick={() => setIsNavOpen(true)}
+              className='absolute left-4 top-4 p-2 hover:bg-gray-100 rounded-lg'
             >
-              Logout
-            </button>
-            <button
-              onClick={handleEdit}
-              className={`absolute right-0 top-[3rem] px-4 py-2 
-                ${isEditMode ? 'bg-indigo-500 text-white' : 'bg-gray-200 text-gray-700'} 
-                hover:bg-indigo-300 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2`}
-            >
-              Edit
+              <Menu size={24} />
             </button>
 
             <img
@@ -181,22 +181,10 @@ function App() {
               {`${dayOfWeek}, ${month} ${day}`}
             </div>
 
-            <div className='flex items-center justify-center gap-4 mb-6'>
-              {userProfile?.images?.[0]?.url ? (
-                <img
-                  src={userProfile.images[0].url}
-                  alt='Profile'
-                  className='w-12 h-12 rounded-full border-2 border-blue-600'
-                />
-              ) : (
-                <div className='w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl'>
-                  {userProfile?.display_name?.[0]?.toUpperCase() || '?'}
-                </div>
-              )}
-              <h2 className='text-4xl font-bold text-custom-blue'>
-                {getTimeBasedGreeting()}, {userProfile?.display_name || 'there'}
-              </h2>
-            </div>
+            <h2 className='text-4xl font-bold text-custom-blue mb-6'>
+              {getTimeBasedGreeting()},{' '}
+              {(userProfile?.display_name || 'there').split(' ')[0]}
+            </h2>
 
             <div className='text-gray-600 font-normal text-2xl pt-12'>
               <h2>What would you like to do today?</h2>
@@ -238,7 +226,13 @@ function App() {
           </div>
         </div>
       )}
-      {userId && <Main userId={userId} accessToken={accessToken} isEditMode={isEditMode} />}
+      {userId && (
+        <Main
+          userId={userId}
+          accessToken={accessToken}
+          isEditMode={isEditMode}
+        />
+      )}
     </div>
   );
 }
